@@ -1,0 +1,9 @@
+pip -->
+    install
+        django
+
+django-admin -->
+    startproject PROJECT_NAME .
+
+python manage.py -->
+    startapp APP_NAME
