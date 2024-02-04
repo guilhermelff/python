@@ -5,4 +5,8 @@ python3 -m venv NAMENEV
 NAMENEV\Scripts\activate.bat # ON WINDOWS
 source NAMENEV/bin/activate # ON LINUX/MAC
 
+pip:
+    install
+        django
+
 deactivate
