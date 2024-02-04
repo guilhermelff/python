@@ -8,8 +8,14 @@ django-admin -->
 python manage.py -->
     startapp APP_NAME
     runserver
+    makemigrations
+    migrate
 
 pip3 -->
     install
         djangorestframework
         django-debug-toolbar
+
+settings.py :
+    add 'rest_framework' to INSTALLED_APPS
+    add APP_NAME to INSTALLED_APPS
