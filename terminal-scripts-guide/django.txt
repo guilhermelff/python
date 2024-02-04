@@ -11,3 +11,4 @@ python manage.py -->
 pip3 -->
     install
         djangorestframework
+        django-debug-toolbar
