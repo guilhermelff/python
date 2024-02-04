@@ -1,15 +1,23 @@
 
 from rest_framework import generics
-from.models import MenuItem
-from.serializers import MenuItemSerializer
+from.models import MenuItem, Category
+from.serializers import MenuItemSerializer, CategorySerializer
 
 
 # Create your views here.
 
 class MenuItemsView(generics.ListCreateAPIView):
-    queryset = MenuItem.objects.all()
+    queryset = MenuItem.objects.select_related('category').all()
     serializer_class = MenuItemSerializer
 
 class SingleMenuItemView(generics.RetrieveUpdateAPIView, generics.DestroyAPIView):
     queryset = (MenuItem.objects.all())
     serializer_class = MenuItemSerializer
+
+class CategoryView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+class SingleCategoryView(generics.RetrieveUpdateAPIView, generics.DestroyAPIView):
+    queryset = (Category.objects.all())
+    serializer_class = CategorySerializer
