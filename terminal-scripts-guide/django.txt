@@ -7,3 +7,7 @@ django-admin -->
 
 python manage.py -->
     startapp APP_NAME
+
+pip3 -->
+    install
+        djangorestframework
