@@ -1,9 +1,9 @@
-
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from.models import MenuItem, Category
 from.serializers import MenuItemSerializer, CategorySerializer
+from django.core.paginator import Paginator, EmptyPage
 
 
 
@@ -12,11 +12,15 @@ from.serializers import MenuItemSerializer, CategorySerializer
 @api_view(['GET', 'POST'])
 def menu_items(request):
     if request.method == 'GET':
+
         items = MenuItem.objects.select_related('category').all()
         category_name = request.query_params.get('category')
         to_price = request.query_params.get('to_price')
         search = request.query_params.get('search')
         ordering = request.query_params.get('ordering')
+        perpage = request.query_params.get('perpage',default=2)
+        page = request.query_params.get('page',default=1)
+
         if search:
             items = items.filter(title__icontains=search)
         if category_name:
@@ -26,8 +30,16 @@ def menu_items(request):
         if ordering:
             ordering_fields = ordering.split(',')
             items = items.order_by(*ordering_fields)
+
+        paginator = Paginator(items, per_page=perpage)
+        try:
+            items = paginator.page(number=page)
+        except EmptyPage:
+            items = []
+
         serialized_item = MenuItemSerializer(items, many=True)
         return Response(serialized_item.data)
+    
     elif request.method == 'POST':
         serializer = MenuItemSerializer(data=request.data)
         if serializer.is_valid():
