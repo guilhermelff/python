@@ -10,6 +10,7 @@ python manage.py -->
     runserver
     makemigrations
     migrate
+    createsuperuser
 
 pip3 -->
     install
@@ -19,6 +20,7 @@ pip3 -->
 
 settings.py :
     add 'rest_framework' to INSTALLED_APPS
+    add 'rest_framework.authtoken' to INSTALLED_APPS
     add 'debug_toolbar' to INSTALLED_APPS
     add 'debug_toolbar.middleware.DebugToolbarMiddleware' to MIDDLEWARE
     add APP_NAME to INSTALLED_APPS
@@ -27,7 +29,12 @@ settings.py :
                 'rest_framework.renderers.JSONRenderer',
                 'rest_framework.renderers.BrowsableAPIRenderer',
                 'rest_framework_xml.renderers.XMLRenderer',
-            ]
+            ],
+            'DEFAULT_AUTHENTICATION_CLASSES': [
+                #...
+                "rest_framework.authentication.TokenAuthentication",
+                #...
+            ],
         }
     set INTERNAL_IPS = [
                         # ...

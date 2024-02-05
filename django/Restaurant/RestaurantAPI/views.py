@@ -1,6 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from.models import MenuItem, Category
 from.serializers import MenuItemSerializer, CategorySerializer
 from django.core.paginator import Paginator, EmptyPage
@@ -58,3 +59,8 @@ class CategoryView(generics.ListCreateAPIView):
 class SingleCategoryView(generics.RetrieveUpdateAPIView, generics.DestroyAPIView):
     queryset = (Category.objects.all())
     serializer_class = CategorySerializer
+
+@api_view()
+@permission_classes([IsAuthenticated])
+def secret(request):
+    return Response({'message': 'Hello, world!'})
