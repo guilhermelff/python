@@ -19,4 +19,15 @@ pip3 -->
 
 settings.py :
     add 'rest_framework' to INSTALLED_APPS
+    add 'debug_toolbar' to INSTALLED_APPS
+    add 'debug_toolbar.middleware.DebugToolbarMiddleware' to MIDDLEWARE
     add APP_NAME to INSTALLED_APPS
+    set INTERNAL_IPS = ['127.0.0.1']
+    set REST_FRAMEWORK = {
+            'DEFAULT_RENDERER_CLASSES': [
+                'rest_framework.renderers.JSONRenderer',
+                'rest_framework.renderers.BrowsableAPIRenderer',
+                'rest_framework_xml.renderers.XMLRenderer',
+            ]
+        }
+
