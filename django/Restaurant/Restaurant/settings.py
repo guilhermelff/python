@@ -126,10 +126,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-INTERNAL_IPS = [
-    '127.0.0.1'
-]
-
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
@@ -137,3 +133,9 @@ REST_FRAMEWORK = {
         'rest_framework_xml.renderers.XMLRenderer',
     ]
 }
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]

@@ -22,7 +22,6 @@ settings.py :
     add 'debug_toolbar' to INSTALLED_APPS
     add 'debug_toolbar.middleware.DebugToolbarMiddleware' to MIDDLEWARE
     add APP_NAME to INSTALLED_APPS
-    set INTERNAL_IPS = ['127.0.0.1']
     set REST_FRAMEWORK = {
             'DEFAULT_RENDERER_CLASSES': [
                 'rest_framework.renderers.JSONRenderer',
@@ -30,4 +29,15 @@ settings.py :
                 'rest_framework_xml.renderers.XMLRenderer',
             ]
         }
+    set INTERNAL_IPS = [
+                        # ...
+                        "127.0.0.1",
+                        # ...
+                    ]
 
+urls.py :
+    set urlpatterns = [
+                            path('admin/',admin.site.urls),
+                            path('api/',include('BookListAPI.urls')),
+                            path('__debug__',include('debug_toolbar.urls')),
+                        ]
