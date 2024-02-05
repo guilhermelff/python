@@ -1,12 +1,15 @@
+from django.conf import UserSettingsHolder
+from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes, throttle_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from .models import MenuItem, Category
 from .serializers import MenuItemSerializer, CategorySerializer
 from .throttles import TenCallsPerMinute
 from django.core.paginator import Paginator, EmptyPage
+from django.contrib.auth.models import User, Group
 
 # Create your views here.
 
@@ -83,3 +86,18 @@ def throttle_check(request):
 @throttle_classes([TenCallsPerMinute])
 def throttle_check_auth(request):
     return Response({'message': 'Success for logged users'})
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def managers(request):
+    username = request.data.get('username')
+    if username:
+        user = get_object_or_404(User, username=username)
+        managers = Group.objects.get(name="Manager")
+        if request.method == 'POST':
+            managers.user_set.add(user)
+        elif request.method == 'DELETE':
+            managers.user_set.remove(user)
+        return Response({'message': 'ok'})
+    else:
+        return Response({'message': 'no username'}, 400)
