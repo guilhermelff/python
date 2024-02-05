@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'RestaurantAPI',
     'debug_toolbar',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +137,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         #...
         "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
         #...
     ],
     'DEFAULT_THROTTLE_RATES': {
@@ -150,3 +152,7 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+DJOSER = {
+    "USER_ID_FIELD": "username",
+}
