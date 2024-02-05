@@ -1,12 +1,12 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.permissions import IsAuthenticated
-from.models import MenuItem, Category
-from.serializers import MenuItemSerializer, CategorySerializer
+from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
+from .models import MenuItem, Category
+from .serializers import MenuItemSerializer, CategorySerializer
+from .throttles import TenCallsPerMinute
 from django.core.paginator import Paginator, EmptyPage
-
-
 
 # Create your views here.
 
@@ -72,3 +72,14 @@ def manager_view(request):
         return Response({'message': 'Hello, manager!'})
     else:
         return Response({'message': 'You are not allowed to'}, 403)
+    
+@api_view()
+@throttle_classes([AnonRateThrottle])
+def throttle_check(request):
+    return Response({'message': 'Success'})
+
+@api_view()
+@permission_classes([IsAuthenticated])
+@throttle_classes([TenCallsPerMinute])
+def throttle_check_auth(request):
+    return Response({'message': 'Success for logged users'})
