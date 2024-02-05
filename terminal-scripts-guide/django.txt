@@ -16,12 +16,16 @@ pip3 -->
     install
         djangorestframework
         djangorestframework-xml
+        djangorestframework-simplejwt~=5.2.1
         django-debug-toolbar
         djoser
+
 
 settings.py :
     add 'rest_framework' to INSTALLED_APPS
     add 'rest_framework.authtoken' to INSTALLED_APPS
+    add 'rest_framework_simplejwt' to INSTALLED_APPS
+    add 'rest_framework_simplejwt.token_blacklist' to INSTALLED_APPS
     add 'debug_toolbar' to INSTALLED_APPS
     add 'djoser' to INSTALLED_APPS
     add 'debug_toolbar.middleware.DebugToolbarMiddleware' to MIDDLEWARE
@@ -34,6 +38,7 @@ settings.py :
             ],
             'DEFAULT_AUTHENTICATION_CLASSES': [
                 #...
+                "rest_framework_simplejwt.authentication.JWTAuthentication",
                 "rest_framework.authentication.TokenAuthentication",
                 "rest_framework.authentication.SessionAuthentication",
                 #...
@@ -51,6 +56,11 @@ settings.py :
     set DJOSER = {
                         "USER_ID_FIELD": "username",
                     }
+    set SIMPLE_JWT = {
+                            "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+                            "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+                            "ROTATE_REFRESH_TOKENS": False,
+                        }
 
 urls.py :
     set urlpatterns = [
