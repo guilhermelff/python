@@ -3,28 +3,35 @@ import asyncio
 from pyppeteer import launch
 import config
 
-url = 'https://www.google.com/maps/place/Dona+J%C3%BA+Cozinha+Bar/@-15.8430724,-48.0307621,15z/data=!4m6!3m5!1s0x935a33d76674d223:0x136e446188b7d344!8m2!3d-15.8477393!4d-48.0265694!16s%2Fg%2F11jlfy2t6v?entry=ttu'
+print("--------------------------------")
+url = input("Enter a URL from a place in Google Maps (in english): ")
 
 async def scrape_reviews(url):
 
     reviews = []
-
-    print("Opening browser...")
+    print("--------------------------------")
+    print("Fetching reviews")
     browser = await launch({"executablePath":'/usr/bin/google-chrome'  ,"headless": True, "args": ["--window-size=800, 3200"]})
+    print(".")
 
 
-    print("Opening new page...")
+    
     page = await browser.newPage()
+    print("..")
     await page.setViewport({"width": 800, "height": 3200})
-    print("Going to url...")
+    print("...")
+    
     await page.goto(url)
-    print("Selecting elements...")
+    print("....")
+    
     await page.waitForSelector(".jftiEf")
+    print(".....")
 
 
     elements = await page.querySelectorAll(".jftiEf")
+    print("......")
 
-    print("Looping elements...")
+    
     for element in elements:
 
         more_btn = await element.querySelector(".w8nwRe")
@@ -36,13 +43,40 @@ async def scrape_reviews(url):
         snippet = await element.querySelector(".MyEned")
         text = await page.evaluate("selected => selected.textContent", snippet)
         reviews.append(text)
-        print(text)
+        
 
-    print("Closing browser...")
+    
     await browser.close()
+    print(".......")
+    print("........ Done")
 
     return reviews
 
+def summarize(reviews, model):
+    
+    prompt = "I collected some reviews of a place I was considering visiting. Can you summarize the reviews for me?"
+    
+    for review in reviews:
+        prompt += "\n" + review
+
+    print("--------------------------------")
+    completion = palm.generate_text(
+        model=model,
+        prompt=prompt,
+        temperature=0,
+        # The maximum length of the response
+        max_output_tokens=800,
+    )
+
+    print(completion.result)
+    print("--------------------------------")
+
+
+palm.configure(api_key=config.API_KEY)
+models = [m for m in palm.list_models() if 'generateText' in m.supported_generation_methods]
+model = models[0].name
 
 
 reviews = asyncio.get_event_loop().run_until_complete(scrape_reviews(url))
+
+summarize(reviews, model)
