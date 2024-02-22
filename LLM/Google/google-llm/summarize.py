@@ -34,10 +34,13 @@ async def scrape_reviews(url):
     
     for element in elements:
 
-        more_btn = await element.querySelector(".w8nwRe")
-        if more_btn is not None:
-            await page.evaluate("button => button.click()", more_btn)
-            await page.waitFor(5000)
+        try:
+            more_btn = await element.querySelector(".w8nwRe")
+            if more_btn is not None:
+                await page.evaluate("button => button.click()", more_btn)
+                await page.waitFor(5000)
+        except:
+            pass
 
         await page.waitForSelector(".MyEned")
         snippet = await element.querySelector(".MyEned")
