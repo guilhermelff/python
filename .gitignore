@@ -1,0 +1,17 @@
+django/bin
+django/include
+django/lib/python3.10/site-packages
+django/lib64
+django/pyvenv.cfg
+LLM/Google/google-llm/__pycache__
+LLM/Google/google-llm/bin
+LLM/Google/google-llm/include
+LLM/Google/google-llm/lib
+LLM/Google/google-llm/lib64
+LLM/Google/google-llm/pyvenv.cfg
+tensorflow/bin
+tensorflow/include
+tensorflow/lib
+tensorflow/lib64
+tensorflow/share
+tensorflow/pyvenv.cfg
