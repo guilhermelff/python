@@ -1,3 +1,5 @@
-files-prompts.py
-input
-output
+bin
+include
+lib
+lib64
+pyvenv.cfg
