@@ -8,3 +8,5 @@ create venv:
     source NAMENEV/bin/activate # ON LINUX/MAC
 
 deactivate
+
+pip install -r requirements. txt
