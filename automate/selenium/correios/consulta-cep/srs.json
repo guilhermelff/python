@@ -1,0 +1,15 @@
+{
+  "srscloud_config": {
+    "url": "https://api.srscloud.com.br/api/",
+    "token":"",
+    "workflowAlias": "",
+    "tarefaAlias": "", 
+    "maquina": ""
+  },
+	"proxy" : {
+    "usarProxy":false,
+    "server": "",
+	  "user": "",
+	  "pass": ""
+	}
+}
