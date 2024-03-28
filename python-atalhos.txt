@@ -1,10 +1,18 @@
+selenium:
+	pegar elemento xpath:
+		driver.find_element(By.XPATH, '//*[@id="endereco"]')
+
 pandas:
 	ler excel:
-		pd.read_excel('tmp.xlsx') 
+		pd.read_excel('tmp.xlsx')
+	salvar excel:
+		enderecosDf.to_excel('enderecos.xlsx',index=False)
 	deletar linhas todalmente nulas:
         df[df.index.notnull()]
 	percorrer colunas:
 		for col in df.columns:
+	percorrer linhas:
+		for index, row in enderecosDf.iterrows():
 		
 os:
 	verificar se pasta existe:
