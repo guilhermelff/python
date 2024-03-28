@@ -1,12 +1,103 @@
--m : module
+pandas:
+	ler excel:
+		pd.read_excel('tmp.xlsx') 
+	deletar linhas todalmente nulas:
+        df[df.index.notnull()]
+	percorrer colunas:
+		for col in df.columns:
+		
+os:
+	verificar se pasta existe:
+		os.path.exists('./json')
+	criar pasta:
+		os.mkdir('./json')
+		
+salvar arquivo:
+	with open(rf'json/{novoNome}.json', 'w') as fp:
+        json.dump(dict, fp)
+		
+venv:
+	criar venv:
+		python3 -m venv NAMENEV
+	ativar:
+		NAMENEV\Scripts\activate.bat # ON WINDOWS
+		source NAMENEV/bin/activate # ON LINUX/MAC
+	desativar:
+		deactivate
+		
+instalar requirements:
+	pip install -r requirements.txt
+	
+django:
+	pip -->
+		install
+			django
 
-create venv:
+	django-admin -->
+		startproject PROJECT_NAME .
 
-    python3 -m venv NAMENEV
+	python manage.py -->
+		startapp APP_NAME
+		runserver
+		makemigrations
+		migrate
+		createsuperuser
 
-    start NAMENEV\Scripts\activate.bat # ON WINDOWS
-    source NAMENEV/bin/activate # ON LINUX/MAC
+	pip3 -->
+		install
+			djangorestframework
+			djangorestframework-xml
+			djangorestframework-simplejwt~=5.2.1
+			django-debug-toolbar
+			djoser
 
-deactivate
 
-pip install -r requirements. txt
+	settings.py :
+		add 'rest_framework' to INSTALLED_APPS
+		add 'rest_framework.authtoken' to INSTALLED_APPS
+		add 'rest_framework_simplejwt' to INSTALLED_APPS
+		add 'rest_framework_simplejwt.token_blacklist' to INSTALLED_APPS
+		add 'debug_toolbar' to INSTALLED_APPS
+		add 'djoser' to INSTALLED_APPS
+		add 'debug_toolbar.middleware.DebugToolbarMiddleware' to MIDDLEWARE
+		add APP_NAME to INSTALLED_APPS
+		set REST_FRAMEWORK = {
+				'DEFAULT_RENDERER_CLASSES': [
+					'rest_framework.renderers.JSONRenderer',
+					'rest_framework.renderers.BrowsableAPIRenderer',
+					'rest_framework_xml.renderers.XMLRenderer',
+				],
+				'DEFAULT_AUTHENTICATION_CLASSES': [
+					#...
+					"rest_framework_simplejwt.authentication.JWTAuthentication",
+					"rest_framework.authentication.TokenAuthentication",
+					"rest_framework.authentication.SessionAuthentication",
+					#...
+				],
+				'DEFAULT_THROTTLE_RATES': {
+					'anon':'2/minute',
+					'user':'5/minute',
+				},
+			}
+		set INTERNAL_IPS = [
+							# ...
+							"127.0.0.1",
+							# ...
+						]
+		set DJOSER = {
+							"USER_ID_FIELD": "username",
+						}
+		set SIMPLE_JWT = {
+								"ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+								"REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+								"ROTATE_REFRESH_TOKENS": False,
+							}
+
+	urls.py :
+		set urlpatterns = [
+								path('admin/',admin.site.urls),
+								path('api/',include('BookListAPI.urls')),
+								path('__debug__',include('debug_toolbar.urls')),
+								path('auth/', include('djoser.urls')),
+								path('auth/', include('djoser.urls.authtoken')),
+							]
