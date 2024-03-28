@@ -101,3 +101,10 @@ django:
 								path('auth/', include('djoser.urls')),
 								path('auth/', include('djoser.urls.authtoken')),
 							]
+							
+date:
+	hojeData = date.today()
+	quinzeDiasAtrasData = hojeData - timedelta(days=15)
+	
+	hojeStr = hojeData.strftime(r"%m-%d-%Y")
+	quinzeDiasAtrasStr = quinzeDiasAtrasData.strftime(r"%m-%d-%Y")
