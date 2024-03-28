@@ -4,7 +4,7 @@ create venv:
 
     python3 -m venv NAMENEV
 
-    NAMENEV\Scripts\activate.bat # ON WINDOWS
+    start NAMENEV\Scripts\activate.bat # ON WINDOWS
     source NAMENEV/bin/activate # ON LINUX/MAC
 
 deactivate
