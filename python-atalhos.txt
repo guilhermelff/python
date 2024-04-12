@@ -19,7 +19,7 @@ os:
 		os.path.exists('./json')
 	criar pasta:
 		os.mkdir('./json')
-		
+		    
 salvar arquivo:
 	with open(rf'json/{novoNome}.json', 'w') as fp:
         json.dump(dict, fp)
