@@ -26,7 +26,7 @@ salvar arquivo:
 		
 venv:
 	criar venv:
-		python3 -m venv NAMENEV
+		python -m venv NAMENEV
 	ativar:
 		NAMENEV\Scripts\activate.bat # ON WINDOWS
 		source NAMENEV/bin/activate # ON LINUX/MAC
